@@ -1,5 +1,16 @@
 
-{% for pokemon in pokemons %}
-    <h1> {% print(pokemon) %} </h1>
-{% endfor %}
 
+<p><a href='http://localhost:3001/pokemons/form'>Adicionar Pokemon</a></p>
+
+{% if pokemons: %}
+    {% for pokemon in pokemons %}
+        <p>
+        {% print(pokemon) %}
+            <a href=http://localhost:3001/pokemons/update/{{ pokemon.id }}>Update</a>
+            <a href=http://localhost:3001/pokemons/delete/{{ pokemon.id }}>Delete</a>
+        </p>
+    {% endfor %}
+
+{% else %}
+    <p> Sem pokemons </p>
+{% endif %}

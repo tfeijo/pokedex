@@ -5,13 +5,15 @@ class DataBase:
         self.con = None
 
         self.path = path
+        
+        self .cur = None
 
         self.connect()
 
     def connect(self):
         try:
             self.con = sqlite3.connect(self.path, check_same_thread=False)
-
+            self.cur = self.con.cursor()
             print("Banco de dados conectado")
 
         except ValueError:
@@ -31,15 +33,23 @@ class DataBase:
             print("Erro ao encerrar conexão com o banco de dados")
 
     def execute(self, query):
-        cur = self.con.cursor()
-        cur.execute(query)
-        return cur.fetchall()
+        try:
+            self.cur.execute(query)
+
+            return self.cur.fetchall()
+        
+        except ValueError:
+            print(ValueError)
+        
+            return None
         
     def save(self):
         try:
             self.con.commit()
+        
         except ValueError:
             print(ValueError)
+        
             print("Erro ao executar commit")
 
 db = DataBase('src\db\db.db')
